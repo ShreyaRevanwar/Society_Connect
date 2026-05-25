@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Society Connect</title>
+
+    <link rel="stylesheet" href="{% static 'core/css/login.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="side-image">
+        <img src="{% static 'images/login.jpg' %}" alt="login-image">
+    </div>
+
+    <div class="login-box">
+        <h2>Login</h2>
+
+        <!-- Django Login Form -->
+        <form method="POST"> 
+            {% csrf_token %}
+
+            {% if error %}
+                <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; padding: 10px; border-radius: 6px; margin-bottom: 15px; font-size: 0.9rem;">
+                    <i class="fa-solid fa-triangle-exclamation"></i> {{ error }}
+                </div>
+            {% endif %}
+
+            <div class="input-group">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" name="username" placeholder="Username" value="{{ username }}" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="button" class="password-toggle" data-toggle="password">
+                    <i class="fa-solid fa-eye"></i>
+                </button>
+            </div>
+
+            <!-- CAPTCHA Section -->
+            <div style="display: flex; gap: 10px; margin-bottom: 15px; align-items: flex-start;">
+                <div style="background: #0f1419; border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 6px; padding: 5px; flex-shrink: 0;">
+                    <img id="captchaImage" src="" alt="CAPTCHA Image" style="width: 180px; height: 60px; display: block; background: #0f1419; border-radius: 4px;">
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px; flex: 1;">
+                    <input type="text" name="captcha_input" id="captchaInput" placeholder="Enter Captcha Code" required autocomplete="off" style="padding: 10px 12px; background: #1a1f2e; border: 1px solid rgba(0, 212, 255, 0.2); color: #e4e6eb; border-radius: 6px; font-size: 0.9rem; transition: all 0.3s ease;">
+                    <button type="button" onclick="refreshCaptcha()" style="background: transparent; border: 1px solid rgba(0, 212, 255, 0.3); color: #00d4ff; cursor: pointer; padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; transition: all 0.3s ease; align-self: flex-end;">
+                        <i class="fa-solid fa-rotate-right"></i> Refresh
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+
+        <p class="signup">
+            Don’t have an account?
+            <a href="{% url 'register' %}">Register</a>
+        </p>
+    </div>
+
+    <!-- <div class="auth-back">
+        <a href="{% url 'continue_as' %}"><i class="fa-solid fa-arrow-left"></i> Back to Landing page</a>
+    </div> -->
+
+</div>
+
+<script src="{% static 'core/js/password-toggle.js' %}"></script>
+<script>
+    function loadCaptcha() {
+        fetch('{% url "get_captcha" %}')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('captchaImage').src = data.captcha_image;
+                document.getElementById('captchaInput').value = '';
+            })
+            .catch(error => console.error('Error loading CAPTCHA:', error));
+    }
+
+    function refreshCaptcha() {
+        fetch('{% url "refresh_captcha" %}')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('captchaImage').src = data.captcha_image;
+                document.getElementById('captchaInput').value = '';
+                document.getElementById('captchaInput').focus();
+            })
+            .catch(error => console.error('Error refreshing CAPTCHA:', error));
+    }
+
+    // Load CAPTCHA when page loads
+    document.addEventListener('DOMContentLoaded', loadCaptcha);
+</script>

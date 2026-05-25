@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pending Requests</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .table-container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .btn {
+            text-decoration: none;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 5px;
+            margin: 2px;
+            display: inline-block;
+        }
+
+        .approve {
+            background-color: #28a745;
+        }
+
+        .approve:hover {
+            background-color: #218838;
+        }
+
+        .reject {
+            background-color: #dc3545;
+        }
+
+        .reject:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="table-container">
+    <h2>Pending Requests</h2>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Flat</th>
+            <th>Action</th>
+        </tr>
+
+        {% for user in users %}
+        <tr>
+            <td>{{ user.full_name }}</td>
+            <td>{{ user.flat_no }}</td>
+            <td>
+                <a href="{% url 'admin_panel:approve_user' user.id %}" class="btn approve">Approve</a>
+                <a href="{% url 'admin_panel:reject_user' user.id %}" class="btn reject">Reject</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">No pending requests</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+</body>
+</html>
