@@ -1,7 +1,7 @@
 # Society Connect
 
 ## Description:
- Society Connect is a Django-based web application designed to simplify residential society management through features like admin approval workflow, CAPTCHA-based authentication, email notifications, complaint management, notices, events, services, maintenance modules, and an analytical dashboard for complaint tracking.
+ ### Society Connect is a Django-based web application designed to simplify residential society management through features like admin approval workflow, CAPTCHA-based authentication, email notifications, complaint management, notices, events, services, maintenance modules, and an analytical dashboard for complaint tracking.
 
 ## Features:
 - Admin Approval Workflow
@@ -142,7 +142,7 @@ After creating the superuser, log in to the superadmin and update the account st
 
 ---
 
-## 8. Check Project for Errors
+### 8. Check Project for Errors
 
 ```bash
 python manage.py check
@@ -150,7 +150,7 @@ python manage.py check
 
 ---
 
-## 9. Run Development Server
+### 9. Run Development Server
 
 ```bash
 python manage.py runserver
@@ -158,7 +158,7 @@ python manage.py runserver
 
 ---
 
-## 10. Open in Browser
+### 10. Open in Browser
 
 ```txt
 http://127.0.0.1:8000/
@@ -166,9 +166,14 @@ http://127.0.0.1:8000/
 
 ---
 
-# Default Workflow
+## Default Workflow
 
 1. User submits registration request
 2. Admin approves User accounts
 3. Approved users can log into the system
 4. Users can access complaint, notice, maintenance,rules and service modules
+
+## Contributors:
+
+- Shreya Revanwar
+- Surabhi Wabale
